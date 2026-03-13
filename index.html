@@ -199,17 +199,19 @@
   }
 
   .hero-tagline {
-    font-size: clamp(18px, 2.5vw, 28px);
+    position: absolute;
+    z-index: 2;
+    bottom: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
     font-weight: 300;
-    letter-spacing: 0.04em;
-    line-height: 1.5;
-    max-width: 700px;
-    margin: 0 auto;
-    opacity: 0.95;
-  }
-
-  .hero-tagline strong {
-    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    animation: fadeUp 1.2s ease both;
+    white-space: nowrap;
   }
 
   /* Scroll arrow */
@@ -730,6 +732,8 @@
   <div class="hero-watermark">
     <img src="logo-white.png" alt="">
   </div>
+
+  <p class="hero-tagline">Váš partner v oboru TZB.</p>
 
   <!-- Hero services -->
   <div class="hero-services">
