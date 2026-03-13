@@ -57,81 +57,88 @@
   }
   .navbar-lang a.active, .navbar-lang a:hover { color: var(--white); }
 
-  /* ─── HERO ─── */
+  /* ─── HERO FULLSCREEN ─── */
   .project-hero {
     position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 120px 48px 80px;
-    background: var(--gray-50);
-    overflow: hidden;
-  }
-
-  .project-hero-inner {
-    max-width: 1200px;
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: center;
-  }
-
-  .project-hero-image {
-    position: relative;
-    border-radius: 20px;
+    height: 100vh;
+    min-height: 600px;
     overflow: hidden;
-    aspect-ratio: 4/3;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.12);
   }
 
-  .project-hero-image img {
+  .project-hero-bg {
+    position: absolute; inset: 0;
     width: 100%; height: 100%;
-    object-fit: cover; display: block;
+    object-fit: cover;
   }
 
-  .project-hero-image .date-pill {
-    position: absolute; top: 20px; left: 20px;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(8px);
-    padding: 8px 16px; border-radius: 20px;
-    font-size: 12px; font-weight: 600; color: var(--gray-600);
-    letter-spacing: 0.03em;
+  .project-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 20, 40, 0.25) 0%,
+      rgba(0, 20, 40, 0.55) 70%,
+      rgba(0, 20, 40, 0.75) 100%
+    );
   }
 
-  .project-hero-text {
-    padding: 20px 0;
-  }
-
-  .project-hero-text .back-link {
+  .project-hero .back-link {
+    position: absolute; top: 100px; left: 60px; z-index: 2;
     display: inline-flex; align-items: center; gap: 8px;
-    font-size: 13px; font-weight: 500; color: var(--blue-primary);
-    text-decoration: none; margin-bottom: 32px; transition: gap 0.3s;
+    font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7);
+    text-decoration: none; transition: color 0.3s, gap 0.3s;
   }
-  .project-hero-text .back-link:hover { gap: 12px; }
+  .project-hero .back-link:hover { color: #fff; gap: 12px; }
 
-  .project-hero-text h1 {
-    font-size: clamp(40px, 5vw, 64px);
-    font-weight: 900; color: var(--gray-900);
-    letter-spacing: -0.03em; line-height: 1.05;
+  .project-hero-content {
+    position: absolute; bottom: 60px; left: 60px; z-index: 2; color: #fff;
+  }
+
+  .project-hero-date {
+    display: inline-block;
+    background: rgba(0, 84, 158, 0.7);
+    backdrop-filter: blur(8px);
+    padding: 6px 18px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; color: #fff;
     margin-bottom: 20px;
   }
 
-  .project-hero-meta {
-    display: flex; gap: 12px; margin-bottom: 32px;
+  .project-hero-content h1 {
+    font-size: clamp(52px, 8vw, 88px);
+    font-weight: 900; letter-spacing: -0.03em;
+    line-height: 1.0; margin-bottom: 28px;
+    text-shadow: 0 4px 32px rgba(0,0,0,0.3);
+  }
+
+  .project-hero-btns {
+    display: flex; gap: 12px;
   }
 
   .project-hero-btn {
-    padding: 10px 24px; border-radius: 24px;
-    border: 1.5px solid var(--gray-200); background: var(--white);
+    padding: 10px 26px; border-radius: 24px;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(6px);
     font-family: 'Montserrat', sans-serif;
-    font-size: 13px; font-weight: 600; color: var(--gray-600);
+    font-size: 13px; font-weight: 600; color: #fff;
     cursor: pointer; transition: all 0.3s;
   }
   .project-hero-btn:hover {
-    border-color: var(--blue-primary); color: var(--blue-primary);
-    background: rgba(0,84,158,0.04);
+    background: rgba(255,255,255,0.25);
+    border-color: rgba(255,255,255,0.6);
+  }
+
+  .project-hero-scroll {
+    position: absolute; bottom: 28px; right: 60px; z-index: 2;
+    width: 44px; height: 44px;
+    border: 1.5px solid rgba(255,255,255,0.35);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .project-hero-scroll:hover {
+    border-color: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.1);
   }
 
   /* ─── INTRO SECTION ─── */
@@ -390,8 +397,9 @@
 
   /* ─── RESPONSIVE ─── */
   @media (max-width: 900px) {
-    .project-hero-inner { grid-template-columns: 1fr; gap: 40px; }
-    .project-hero { padding: 100px 24px 60px; min-height: auto; }
+    .project-hero-content { left: 32px; bottom: 40px; }
+    .project-hero .back-link { left: 32px; }
+    .project-hero-scroll { right: 32px; }
     .project-about-inner { grid-template-columns: 1fr; }
     .project-tech-inner { grid-template-columns: 1fr; }
     .more-projects-grid { grid-template-columns: 1fr; }
@@ -402,6 +410,8 @@
   @media (max-width: 640px) {
     .navbar-links { display: none; }
     .project-about-images { grid-template-columns: 1fr; }
+    .project-hero { min-height: 500px; }
+    .project-hero-content h1 { font-size: 44px; }
   }
 </style>
 </head>
@@ -430,28 +440,30 @@
 
 <!-- ─── HERO ─── -->
 <section class="project-hero">
-  <div class="project-hero-inner">
-    <div class="project-hero-image reveal">
-      <!-- Nahraď src vlastní fotkou Nexen Tire Žatec -->
-      <img src="ref-obchodni-centra.png" alt="NEXEN TIRE – Žatec">
-      <div class="date-pill">Datum dokončení Q4 2023</div>
-    </div>
-    <div class="project-hero-text">
-      <a href="prumyslove-stavby.html" class="back-link">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Zpět na reference
-      </a>
-      <h1 class="reveal">NEXEN<br>TIRE</h1>
-      <div class="project-hero-meta reveal">
-        <button class="project-hero-btn">Fotografie</button>
-        <button class="project-hero-btn">Podklady</button>
-      </div>
+  <img class="project-hero-bg" src="ref-obchodni-centra.png" alt="">
+  <div class="project-hero-overlay"></div>
+
+  <a href="prumyslove-stavby.html" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Zpět na reference
+  </a>
+
+  <div class="project-hero-content">
+    <div class="project-hero-date">Datum dokončení Q4 2023</div>
+    <h1>NEXEN TIRE</h1>
+    <div class="project-hero-btns">
+      <button class="project-hero-btn">Fotografie</button>
+      <button class="project-hero-btn">Podklady</button>
     </div>
   </div>
+
+  <a href="#predstaveni" class="project-hero-scroll">
+    <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
 </section>
 
 <!-- ─── INTRO ─── -->
-<section class="project-intro reveal">
+<section class="project-intro reveal" id="predstaveni">
   <div class="project-intro-inner">
     <p class="project-intro-label">Představení</p>
     <p class="project-intro-text">
