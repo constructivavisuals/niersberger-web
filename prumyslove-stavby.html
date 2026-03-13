@@ -541,6 +541,42 @@
     transform: translateY(0);
   }
 
+  /* ─── HAMBURGER & MOBILE MENU ─── */
+  .hamburger {
+    display: none; background: none; border: none; cursor: pointer;
+    padding: 8px; z-index: 1001;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px; background: #fff;
+    margin: 5px 0; transition: 0.3s;
+  }
+  .mobile-menu-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 998;
+  }
+  .mobile-menu {
+    position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+    background: var(--blue-primary); z-index: 999;
+    padding: 100px 32px 32px; transition: right 0.3s;
+    overflow-y: auto;
+  }
+  .mobile-menu.open { right: 0; }
+  .mobile-menu.open + .mobile-menu-overlay { display: block; }
+  .mobile-menu a {
+    font-size: 16px; padding: 16px 0; display: block; color: #fff;
+    text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-weight: 500;
+  }
+  .mobile-menu-lang {
+    display: flex; gap: 16px; padding-top: 24px;
+  }
+  .mobile-menu-lang a {
+    border-bottom: none; font-size: 14px; font-weight: 600;
+    padding: 8px 0; display: inline;
+  }
+  .mobile-menu-lang a.active { opacity: 1; }
+  .mobile-menu-lang a:not(.active) { opacity: 0.5; }
+
   /* ─── RESPONSIVE ─── */
   @media (max-width: 1024px) {
     .page-body {
@@ -561,16 +597,18 @@
   }
 
   @media (max-width: 768px) {
-    .footer { padding: 48px 24px; }
-    .footer-inner { grid-template-columns: 1fr; }
-  }
-
-  @media (max-width: 640px) {
-    .navbar { padding: 14px 20px; }
+    .hamburger { display: block !important; }
+    .navbar { padding: 12px 16px !important; }
     .navbar-logo img { height: 32px !important; }
-    .navbar-links { display: none; }
-    .projects-grid { grid-template-columns: 1fr; }
+    .navbar-links { display: none !important; }
+    .navbar-lang { display: none !important; }
+    .footer { padding: 48px 16px 32px !important; }
+    .footer-inner { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .form-row { grid-template-columns: 1fr !important; }
+    .projects-grid { grid-template-columns: 1fr !important; }
     .project-card { min-width: 0; }
+    .project-card-img-wrap img { max-width: 100%; }
+    .page-body { padding: 30px 16px 60px; gap: 32px; }
     .page-hero { height: 35vh; min-height: 280px; }
   }
 </style>
@@ -596,7 +634,24 @@
       <a href="#">DE</a>
     </div>
   </div>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu">
+  <a href="index.html#reference" onclick="this.parentElement.classList.remove('open')">Naše služby</a>
+  <a href="index.html#reference" onclick="this.parentElement.classList.remove('open')">Reference</a>
+  <a href="#" onclick="this.parentElement.classList.remove('open')">O společnosti</a>
+  <a href="#" onclick="this.parentElement.classList.remove('open')">Kariéra</a>
+  <a href="index.html#kontakt" onclick="this.parentElement.classList.remove('open')">Kontakty</a>
+  <div class="mobile-menu-lang">
+    <a href="#" class="active">CZ</a>
+    <a href="#">EN</a>
+    <a href="#">DE</a>
+  </div>
+</div>
+<div class="mobile-menu-overlay" onclick="document.querySelector('.mobile-menu').classList.remove('open')"></div>
 
 <!-- ─── HERO ─── -->
 <section class="page-hero">
