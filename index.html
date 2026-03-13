@@ -240,6 +240,42 @@
     60% { transform: translateX(-50%) translateY(-5px); }
   }
 
+  /* ─── HERO SOCIALS ─── */
+  .hero-socials {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hero-socials a {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .hero-socials a:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.1);
+  }
+
+  .hero-socials a svg {
+    width: 18px;
+    height: 18px;
+  }
+
   /* ─── SERVICES ─── */
   .services {
     padding: 100px 48px 120px;
@@ -719,7 +755,7 @@
 <!-- ─── NAVBAR ─── -->
 <nav class="navbar" id="navbar">
   <a href="#" class="navbar-logo">
-    <img src="logo-bile.png" alt="Niersberger" style="height: 36px; width: auto;">
+    <img src="logo-bile.png" alt="Niersberger" style="height: 90px; width: auto;">
   </a>
   <div style="display:flex;align-items:center;">
     <ul class="navbar-links">
@@ -756,6 +792,22 @@
       <path d="M12 15 L18 21 L24 15" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </a>
+
+  <!-- Social media circles -->
+  <div class="hero-socials">
+    <a href="#" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" fill="#fff"/></svg>
+    </a>
+    <a href="#" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="5" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/></svg>
+    </a>
+    <a href="#" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="#" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z" fill="#fff"/></svg>
+    </a>
+  </div>
 </section>
 
 <!-- ─── SERVICES ─── -->
@@ -900,11 +952,7 @@
   <div class="footer-inner">
     <div class="footer-form-side">
       <div class="footer-logo">
-        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Niersberger N mark — brand manual 2.1, negative version -->
-          <path d="M4 4 L28 4 L28 34 Q28 56, 4 56 Z" fill="#ffffff"/>
-          <path d="M32 4 Q56 4, 56 28 L56 56 L32 56 Z" fill="#E31819"/>
-        </svg>
+        <img src="logo-classic.jpg" alt="Niersberger" style="height: 60px; width: auto;">
       </div>
       <h2 class="footer-heading">Napište nám, nebo zavolejte</h2>
       <p class="footer-sub">Rádi Vám poradíme s vašim projektem</p>
