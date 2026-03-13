@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXEN TIRE – Reference – Niersberger</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-primary: #00549E;
+    --blue-dark: #003a6e;
+    --blue-deep: #002347;
+    --accent-red: #E31819;
+    --white: #ffffff;
+    --gray-50: #f9fafb;
+    --gray-100: #f5f7f8;
+    --gray-200: #e8ebed;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-family: 'Montserrat', sans-serif; }
+  body { background: var(--white); color: var(--gray-800); overflow-x: hidden; }
+
+  /* ─── NAVBAR ─── */
+  .navbar {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--blue-primary);
+    box-shadow: 0 2px 24px rgba(0,0,0,0.1);
+  }
+  .navbar-logo img { height: 44px; width: auto; display: block; }
+  .navbar-right { display: flex; align-items: center; }
+  .navbar-links { display: flex; gap: 32px; list-style: none; }
+  .navbar-links a {
+    color: var(--white); text-decoration: none; font-size: 13px;
+    font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    padding-bottom: 4px; position: relative; transition: opacity 0.3s;
+  }
+  .navbar-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 2px; background: var(--white); transition: width 0.3s;
+  }
+  .navbar-links a:hover::after { width: 100%; }
+  .navbar-lang {
+    display: flex; gap: 12px; margin-left: 24px;
+    padding-left: 24px; border-left: 1px solid rgba(255,255,255,0.3);
+  }
+  .navbar-lang a {
+    color: rgba(255,255,255,0.5); text-decoration: none;
+    font-size: 13px; font-weight: 600; transition: color 0.3s;
+  }
+  .navbar-lang a.active, .navbar-lang a:hover { color: var(--white); }
+
+  /* ─── HERO ─── */
+  .project-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    background: var(--gray-50);
+    overflow: hidden;
+  }
+
+  .project-hero-inner {
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .project-hero-image {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.12);
+  }
+
+  .project-hero-image img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+
+  .project-hero-image .date-pill {
+    position: absolute; top: 20px; left: 20px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    padding: 8px 16px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; color: var(--gray-600);
+    letter-spacing: 0.03em;
+  }
+
+  .project-hero-text {
+    padding: 20px 0;
+  }
+
+  .project-hero-text .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 500; color: var(--blue-primary);
+    text-decoration: none; margin-bottom: 32px; transition: gap 0.3s;
+  }
+  .project-hero-text .back-link:hover { gap: 12px; }
+
+  .project-hero-text h1 {
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 900; color: var(--gray-900);
+    letter-spacing: -0.03em; line-height: 1.05;
+    margin-bottom: 20px;
+  }
+
+  .project-hero-meta {
+    display: flex; gap: 12px; margin-bottom: 32px;
+  }
+
+  .project-hero-btn {
+    padding: 10px 24px; border-radius: 24px;
+    border: 1.5px solid var(--gray-200); background: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px; font-weight: 600; color: var(--gray-600);
+    cursor: pointer; transition: all 0.3s;
+  }
+  .project-hero-btn:hover {
+    border-color: var(--blue-primary); color: var(--blue-primary);
+    background: rgba(0,84,158,0.04);
+  }
+
+  /* ─── INTRO SECTION ─── */
+  .project-intro {
+    padding: 100px 48px;
+    background: var(--white);
+  }
+
+  .project-intro-inner {
+    max-width: 900px; margin: 0 auto; text-align: center;
+  }
+
+  .project-intro-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--blue-primary); margin-bottom: 24px;
+  }
+
+  .project-intro-text {
+    font-size: clamp(20px, 2.5vw, 28px);
+    font-weight: 500; line-height: 1.6;
+    color: var(--gray-800); letter-spacing: -0.01em;
+  }
+
+  /* ─── VIDEO SECTION ─── */
+  .project-video {
+    padding: 0 48px 100px;
+  }
+
+  .project-video-inner {
+    max-width: 1200px; margin: 0 auto;
+    border-radius: 20px; overflow: hidden;
+    aspect-ratio: 16/9; background: var(--gray-900);
+    position: relative;
+  }
+
+  .project-video-inner video {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  .project-video-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--blue-deep), var(--blue-primary));
+    color: rgba(255,255,255,0.3); font-size: 18px; font-weight: 500;
+  }
+
+  /* ─── ABOUT SECTION ─── */
+  .project-about {
+    padding: 100px 48px;
+    background: var(--gray-50);
+  }
+
+  .project-about-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: start;
+  }
+
+  .project-about-text-side {}
+
+  .project-about-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--blue-primary); margin-bottom: 20px;
+  }
+
+  .project-about-text {
+    font-size: 16px; line-height: 1.8; color: var(--gray-600); font-weight: 400;
+  }
+
+  .project-about-text strong {
+    color: var(--gray-800); font-weight: 600;
+  }
+
+  .project-about-images {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+
+  .project-about-images img {
+    width: 100%; border-radius: 16px; object-fit: cover;
+    aspect-ratio: 3/4;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    transition: transform 0.4s;
+  }
+
+  .project-about-images img:hover { transform: translateY(-4px); }
+
+  /* ─── TECH SECTION ─── */
+  .project-tech {
+    padding: 100px 48px;
+    background: var(--white);
+  }
+
+  .project-tech-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: center;
+  }
+
+  .project-tech-img {
+    width: 100%; border-radius: 20px; object-fit: cover;
+    aspect-ratio: 4/3;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+    transition: transform 0.4s;
+  }
+
+  .project-tech-img:hover { transform: scale(1.02); }
+
+  .project-tech-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--blue-primary); margin-bottom: 20px;
+  }
+
+  .project-tech-text {
+    font-size: 16px; line-height: 1.8; color: var(--gray-600);
+  }
+
+  /* ─── MORE PROJECTS ─── */
+  .more-projects {
+    padding: 100px 48px;
+    background: var(--gray-50);
+  }
+
+  .more-projects-inner {
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .more-projects-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--blue-primary); margin-bottom: 40px;
+  }
+
+  .more-projects-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+
+  .more-project-card {
+    text-decoration: none; color: inherit;
+    border-radius: 16px; overflow: hidden;
+    background: var(--white);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    transition: transform 0.4s, box-shadow 0.4s;
+    display: block;
+  }
+
+  .more-project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  }
+
+  .more-project-card-img {
+    width: 100%; aspect-ratio: 16/10;
+    object-fit: cover; display: block;
+    transition: transform 0.5s;
+  }
+
+  .more-project-card:hover .more-project-card-img {
+    transform: scale(1.03);
+  }
+
+  .more-project-card-img-wrap { overflow: hidden; }
+
+  .more-project-card-body {
+    padding: 20px 24px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .more-project-card-name {
+    font-size: 16px; font-weight: 700; color: var(--gray-800);
+  }
+
+  .more-project-card-date {
+    font-size: 12px; color: var(--gray-400); margin-top: 4px;
+  }
+
+  .more-project-card-btns {
+    display: flex; gap: 8px;
+  }
+
+  .more-project-card-btn {
+    padding: 6px 14px; border-radius: 16px;
+    border: 1px solid var(--gray-200); background: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 500; color: var(--gray-600);
+    cursor: pointer; transition: all 0.3s;
+  }
+
+  .more-project-card-btn:hover {
+    border-color: var(--blue-primary); color: var(--blue-primary);
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--blue-primary);
+    padding: 80px 48px 60px; color: var(--white);
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: start;
+  }
+  .footer-logo { margin-bottom: 32px; }
+  .footer-logo img { height: 50px; width: auto; }
+  .footer-heading { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  .footer-sub { font-size: 14px; font-weight: 300; opacity: 0.6; margin-bottom: 36px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; }
+  .form-group input, .form-group textarea {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px; padding: 14px 16px; color: var(--white);
+    font-family: 'Montserrat', sans-serif; font-size: 14px;
+    transition: all 0.3s; outline: none;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+  .form-group input:focus, .form-group textarea:focus { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.12); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-submit {
+    margin-top: 20px; padding: 14px 40px;
+    background: var(--white); color: var(--blue-primary);
+    font-family: 'Montserrat', sans-serif; font-size: 13px;
+    font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s;
+  }
+  .form-submit:hover { background: var(--gray-100); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .footer-contact { padding-top: 20px; }
+  .footer-contact-block {
+    background: rgba(255,255,255,0.06); border-radius: 16px;
+    padding: 40px; border: 1px solid rgba(255,255,255,0.08);
+  }
+  .contact-item { margin-bottom: 28px; }
+  .contact-item:last-child { margin-bottom: 0; }
+  .contact-item-label { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5; margin-bottom: 8px; }
+  .contact-item-value { font-size: 20px; font-weight: 600; }
+  .contact-item-value a { color: var(--white); text-decoration: none; transition: opacity 0.3s; }
+  .contact-item-value a:hover { opacity: 0.8; }
+  .footer-bottom {
+    max-width: 1100px; margin: 48px auto 0; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: 12px; opacity: 0.4; }
+  .footer-socials { display: flex; gap: 16px; }
+  .footer-socials a {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+  }
+  .footer-socials a:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+  .footer-socials a svg { width: 16px; height: 16px; fill: var(--white); }
+
+  /* ─── ANIMATIONS ─── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .project-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .project-hero { padding: 100px 24px 60px; min-height: auto; }
+    .project-about-inner { grid-template-columns: 1fr; }
+    .project-tech-inner { grid-template-columns: 1fr; }
+    .more-projects-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .navbar { padding: 16px 24px; }
+  }
+
+  @media (max-width: 640px) {
+    .navbar-links { display: none; }
+    .project-about-images { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav class="navbar">
+  <a href="index.html" class="navbar-logo">
+    <img src="logo-bile.png" alt="Niersberger">
+  </a>
+  <div class="navbar-right">
+    <ul class="navbar-links">
+      <li><a href="index.html#reference">Naše služby</a></li>
+      <li><a href="index.html#reference">Reference</a></li>
+      <li><a href="#">O společnosti</a></li>
+      <li><a href="#">Kariéra</a></li>
+      <li><a href="index.html#kontakt">Kontakty</a></li>
+    </ul>
+    <div class="navbar-lang">
+      <a href="#" class="active">CZ</a>
+      <a href="#">EN</a>
+      <a href="#">DE</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="project-hero">
+  <div class="project-hero-inner">
+    <div class="project-hero-image reveal">
+      <!-- Nahraď src vlastní fotkou Nexen Tire Žatec -->
+      <img src="ref-obchodni-centra.png" alt="NEXEN TIRE – Žatec">
+      <div class="date-pill">Datum dokončení Q4 2023</div>
+    </div>
+    <div class="project-hero-text">
+      <a href="prumyslove-stavby.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Zpět na reference
+      </a>
+      <h1 class="reveal">NEXEN<br>TIRE</h1>
+      <div class="project-hero-meta reveal">
+        <button class="project-hero-btn">Fotografie</button>
+        <button class="project-hero-btn">Podklady</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INTRO ─── -->
+<section class="project-intro reveal">
+  <div class="project-intro-inner">
+    <p class="project-intro-label">Představení</p>
+    <p class="project-intro-text">
+      Kompletní dodávka TZB pro první evropský výrobní závod jihokorejské společnosti Nexen Tire v Žatci. Unikátní projekt zahrnující dvě fáze výstavby, který posílil pozici České republiky jako klíčového hráče v automobilovém průmyslu.
+    </p>
+  </div>
+</section>
+
+<!-- ─── VIDEO ─── -->
+<section class="project-video reveal">
+  <div class="project-video-inner">
+    <!-- Nahraď za video z projektu, nebo smaž celou sekci -->
+    <div class="project-video-placeholder">Video z realizace bude doplněno</div>
+  </div>
+</section>
+
+<!-- ─── O PROJEKTU ─── -->
+<section class="project-about">
+  <div class="project-about-inner">
+    <div class="project-about-text-side reveal">
+      <p class="project-about-label">O projektu</p>
+      <p class="project-about-text">
+        Výstavba závodu <strong>Nexen Tire Europe</strong> v Žatci představuje jednu z největších zahraničních investic v Ústeckém kraji. Společnost Niersberger zajistila kompletní dodávku technického zařízení budov včetně <strong>stabilního hasicího zařízení</strong>, hydrantových rozvodů a <strong>potrubních rozvodů veškerých médií</strong> včetně zapojení technologického a strojního zařízení.
+        <br><br>
+        Druhá fáze projektu, zahájená po odložení kvůli pandemii Covid-19, zahrnovala dva smluvní balíčky: hasicí zařízení s vysokoexpanzní pěnou a kompletní potrubní rozvody.
+      </p>
+    </div>
+    <div class="project-about-images reveal">
+      <!-- Nahraď src vlastními fotkami z projektu -->
+      <img src="ref-prumyslove.jpg" alt="Nexen Tire – výstavba">
+      <img src="ref-obchodni-zastoupeni.jpg" alt="Nexen Tire – technologie">
+    </div>
+  </div>
+</section>
+
+<!-- ─── TECHNOLOGIE ─── -->
+<section class="project-tech">
+  <div class="project-tech-inner">
+    <img class="project-tech-img reveal" src="ref-obchodni-centra.png" alt="Nexen Tire – interiér">
+    <div class="reveal">
+      <p class="project-tech-label">Technologie</p>
+      <p class="project-tech-text">
+        Závod Nexen Tire Europe je prvním výrobním závodem společnosti mimo Asii. Areál zahrnuje hlavní výrobní halu o rozměrech přibližně 860 × 90 metrů. Niersberger realizoval komplexní systémy vzduchotechniky, klimatizace, vytápění, chlazení a průmyslových médií, které zajišťují optimální podmínky pro výrobu pneumatik na nejvyšší technologické úrovni.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DALŠÍ PROJEKTY ─── -->
+<section class="more-projects">
+  <div class="more-projects-inner">
+    <p class="more-projects-label reveal">Další projekty</p>
+    <div class="more-projects-grid">
+      <a href="#" class="more-project-card reveal">
+        <div class="more-project-card-img-wrap">
+          <img class="more-project-card-img" src="ref-prumyslove.jpg" alt="JHP Werk 5">
+        </div>
+        <div class="more-project-card-body">
+          <div>
+            <p class="more-project-card-name">JHP WERK 5</p>
+            <p class="more-project-card-date">Datum dokončení Q2 2025</p>
+          </div>
+          <div class="more-project-card-btns">
+            <button class="more-project-card-btn">Fotografie</button>
+            <button class="more-project-card-btn">Podklady</button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="more-project-card reveal">
+        <div class="more-project-card-img-wrap">
+          <img class="more-project-card-img" src="ref-obchodni-zastoupeni.jpg" alt="Schaeffler Svitavy">
+        </div>
+        <div class="more-project-card-body">
+          <div>
+            <p class="more-project-card-name">SCHAEFFLER</p>
+            <p class="more-project-card-date">Datum dokončení Q3 2022</p>
+          </div>
+          <div class="more-project-card-btns">
+            <button class="more-project-card-btn">Fotografie</button>
+            <button class="more-project-card-btn">Podklady</button>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer" id="kontakt">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <img src="logo-bile.png" alt="Niersberger" style="height: 50px; width: auto;">
+      </div>
+      <h2 class="footer-heading">Napište nám, nebo zavolejte</h2>
+      <p class="footer-sub">Rádi Vám poradíme s vašim projektem</p>
+      <div class="form-row">
+        <div class="form-group"><label>Jméno *</label><input type="text" placeholder="Jan"></div>
+        <div class="form-group"><label>Příjmení *</label><input type="text" placeholder="Novák"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Telefon *</label><input type="tel" placeholder="+420 ..."></div>
+        <div class="form-group"><label>E-mail *</label><input type="email" placeholder="jan@firma.cz"></div>
+      </div>
+      <div class="form-group full"><label>Poznámka *</label><textarea placeholder="Váš dotaz nebo poptávka..."></textarea></div>
+      <button class="form-submit">Odeslat</button>
+    </div>
+    <div class="footer-contact">
+      <div class="footer-contact-block">
+        <div class="contact-item">
+          <p class="contact-item-label">Telefon</p>
+          <p class="contact-item-value"><a href="tel:+420317721741">+420 317 721 741-2</a></p>
+        </div>
+        <div class="contact-item">
+          <p class="contact-item-label">Servisní hotline</p>
+          <p class="contact-item-value"><a href="tel:+420777700022">+420 777 700 022</a></p>
+        </div>
+        <div class="contact-item">
+          <p class="contact-item-label">E-mail</p>
+          <p class="contact-item-value"><a href="mailto:info@niersberger.cz">info@niersberger.cz</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Niersberger. Všechna práva vyhrazena.</p>
+    <div class="footer-socials">
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+      <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/></svg></a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealElements = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealElements.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
