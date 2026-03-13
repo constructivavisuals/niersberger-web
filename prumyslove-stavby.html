@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Průmyslové stavby – Reference – Niersberger</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-primary: #00549E;
+    --blue-dark: #003a6e;
+    --blue-deep: #002347;
+    --accent-red: #E31819;
+    --white: #ffffff;
+    --gray-100: #f5f7f8;
+    --gray-200: #e8ebed;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --gray-800: #1f2937;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  body {
+    background: var(--white);
+    color: var(--gray-800);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVBAR ─── */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--blue-primary);
+    box-shadow: 0 2px 24px rgba(0,0,0,0.1);
+  }
+
+  .navbar-logo img {
+    height: 44px;
+    width: auto;
+    display: block;
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .navbar-links a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 4px;
+    transition: opacity 0.3s;
+  }
+
+  .navbar-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--white);
+    transition: width 0.3s ease;
+  }
+
+  .navbar-links a:hover::after { width: 100%; }
+
+  .navbar-lang {
+    display: flex;
+    gap: 12px;
+    margin-left: 24px;
+    padding-left: 24px;
+    border-left: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .navbar-lang a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+
+  .navbar-lang a.active,
+  .navbar-lang a:hover { color: var(--white); }
+
+  /* ─── HERO BANNER ─── */
+  .page-hero {
+    position: relative;
+    height: 50vh;
+    min-height: 400px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+  }
+
+  .page-hero-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.7);
+  }
+
+  .page-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 35, 71, 0.4) 0%,
+      rgba(0, 35, 71, 0.6) 100%
+    );
+  }
+
+  .page-hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: var(--white);
+    padding-top: 80px;
+  }
+
+  .page-hero-content h1 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .page-hero-content .breadcrumb {
+    font-size: 14px;
+    font-weight: 400;
+    opacity: 0.7;
+  }
+
+  .page-hero-content .breadcrumb a {
+    color: var(--white);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.3s;
+  }
+
+  .page-hero-content .breadcrumb a:hover { opacity: 0.9; }
+
+  /* ─── SIDEBAR + CONTENT LAYOUT ─── */
+  .page-body {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 60px 48px 100px;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 64px;
+  }
+
+  /* ─── PROJECT CARDS ─── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .project-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  }
+
+  .project-card-img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .project-card:hover .project-card-img {
+    transform: scale(1.03);
+  }
+
+  .project-card-img-wrap {
+    overflow: hidden;
+    border-radius: 16px 16px 0 0;
+  }
+
+  /* Placeholder for missing images */
+  .project-card-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: linear-gradient(135deg, #dde4ea, #c8d2db);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-400);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .project-card-body {
+    padding: 20px 24px 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .project-card-dots {
+    display: flex;
+    gap: 5px;
+    margin-top: 6px;
+  }
+
+  .project-card-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--blue-primary);
+  }
+
+  .project-card-dot.gray { background: var(--gray-300); }
+
+  .project-card-info {
+    flex: 1;
+  }
+
+  .project-card-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 4px;
+    letter-spacing: 0.01em;
+  }
+
+  .project-card-date {
+    font-size: 13px;
+    color: var(--gray-400);
+    font-weight: 400;
+  }
+
+  .project-card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 2px;
+  }
+
+  .project-card-btn {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .project-card-btn:hover {
+    border-color: var(--blue-primary);
+    color: var(--blue-primary);
+    background: rgba(0, 84, 158, 0.04);
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    position: sticky;
+    top: 120px;
+  }
+
+  .sidebar-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-list {
+    list-style: none;
+  }
+
+  .sidebar-list li {
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .sidebar-list li:first-child {
+    border-top: 1px solid var(--gray-200);
+  }
+
+  .sidebar-list a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-600);
+    transition: color 0.3s ease;
+  }
+
+  .sidebar-list a:hover,
+  .sidebar-list a.active {
+    color: var(--blue-primary);
+  }
+
+  .sidebar-list a.active {
+    font-weight: 700;
+  }
+
+  .sidebar-list .arrow {
+    font-size: 12px;
+    opacity: 0.4;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .sidebar-list a:hover .arrow,
+  .sidebar-list a.active .arrow {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--blue-primary);
+    padding: 80px 48px 60px;
+    color: var(--white);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .footer-logo { margin-bottom: 32px; }
+  .footer-logo img { height: 50px; width: auto; }
+
+  .footer-heading {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .footer-sub {
+    font-size: 14px;
+    font-weight: 300;
+    opacity: 0.6;
+    margin-bottom: 36px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group.full { grid-column: 1 / -1; }
+
+  .form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.12);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 120px; }
+
+  .form-submit {
+    margin-top: 20px;
+    padding: 14px 40px;
+    background: var(--white);
+    color: var(--blue-primary);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .form-submit:hover {
+    background: var(--gray-100);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+
+  .footer-contact { padding-top: 20px; }
+
+  .footer-contact-block {
+    background: rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 40px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .contact-item { margin-bottom: 28px; }
+  .contact-item:last-child { margin-bottom: 0; }
+
+  .contact-item-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 8px;
+  }
+
+  .contact-item-value {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .contact-item-value a {
+    color: var(--white);
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+
+  .contact-item-value a:hover { opacity: 0.8; }
+
+  .footer-bottom {
+    max-width: 1100px;
+    margin: 48px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-bottom p {
+    font-size: 12px;
+    opacity: 0.4;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 16px;
+  }
+
+  .footer-socials a {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .footer-socials a:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-2px);
+  }
+
+  .footer-socials a svg {
+    width: 16px; height: 16px;
+    fill: var(--white);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .page-body {
+      grid-template-columns: 1fr;
+      padding: 40px 24px 80px;
+    }
+    .sidebar { position: static; order: -1; }
+    .sidebar-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sidebar-list li { border: none; }
+    .sidebar-list a {
+      padding: 8px 16px;
+      border: 1px solid var(--gray-200);
+      border-radius: 20px;
+      font-size: 13px;
+    }
+    .sidebar-list a.active { border-color: var(--blue-primary); }
+    .sidebar-list .arrow { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .navbar { padding: 16px 24px; }
+    .navbar-links { display: none; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .page-hero { height: 35vh; min-height: 280px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav class="navbar">
+  <a href="index.html" class="navbar-logo">
+    <img src="logo-bile.png" alt="Niersberger" style="height: 44px; width: auto;">
+  </a>
+  <div class="navbar-right">
+    <ul class="navbar-links">
+      <li><a href="index.html#reference">Naše služby</a></li>
+      <li><a href="index.html#reference" style="opacity:1;">Reference</a></li>
+      <li><a href="#">O společnosti</a></li>
+      <li><a href="#">Kariéra</a></li>
+      <li><a href="index.html#kontakt">Kontakty</a></li>
+    </ul>
+    <div class="navbar-lang">
+      <a href="#" class="active">CZ</a>
+      <a href="#">EN</a>
+      <a href="#">DE</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="page-hero">
+  <div class="page-hero-img" style="background-image: url('ref-prumyslove.jpg');"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <p class="breadcrumb"><a href="index.html">Niersberger Instalace, s.r.o.</a> &gt; <a href="index.html#reference">Reference</a> &gt; Průmyslové stavby</p>
+    <h1>Průmyslové stavby</h1>
+  </div>
+</section>
+
+<!-- ─── BODY ─── -->
+<div class="page-body">
+  <main>
+    <p style="font-size:15px;color:var(--gray-400);line-height:1.7;margin-bottom:48px;">
+      Pokud máte zájem o reference naší společnosti, kontaktujte nás prostřednictvím níže zobrazeného <a href="index.html#kontakt" style="color:var(--blue-primary);">kontaktního formuláře</a>, rádi Vám prezentaci společnosti s našimi referenčními zakázkami zašleme.
+    </p>
+
+    <div class="projects-grid">
+
+      <!-- JHP WERK 5 (Bosch) -->
+      <div class="project-card reveal">
+        <div class="project-card-img-wrap">
+          <!-- Nahraď src vlastní fotkou z Bosch Jihlava -->
+          <img class="project-card-img" src="ref-prumyslove.jpg" alt="JHP Werk 5 – Bosch Jihlava"
+               onerror="this.parentElement.innerHTML='<div class=project-card-placeholder>Fotografie bude doplněna</div>';">
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-dots">
+            <span class="project-card-dot"></span>
+            <span class="project-card-dot gray"></span>
+            <span class="project-card-dot gray"></span>
+          </div>
+          <div class="project-card-info">
+            <h3 class="project-card-name">JHP WERK 5</h3>
+            <p class="project-card-date">Datum dokončení Q2 2025</p>
+          </div>
+          <div class="project-card-actions">
+            <button class="project-card-btn">Fotografie</button>
+            <button class="project-card-btn">Podklady</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEXEN TIRE -->
+      <div class="project-card reveal">
+        <div class="project-card-img-wrap">
+          <!-- Nahraď src vlastní fotkou z Nexen Tire Žatec -->
+          <img class="project-card-img" src="ref-obchodni-centra.png" alt="Nexen Tire – Žatec"
+               onerror="this.parentElement.innerHTML='<div class=project-card-placeholder>Fotografie bude doplněna</div>';">
+        </div>
+        <div class="project-card-body">
+          <div class="project-card-dots">
+            <span class="project-card-dot"></span>
+            <span class="project-card-dot"></span>
+            <span class="project-card-dot gray"></span>
+          </div>
+          <div class="project-card-info">
+            <h3 class="project-card-name">NEXEN TIRE</h3>
+            <p class="project-card-date">Datum dokončení Q4 2023</p>
+          </div>
+          <div class="project-card-actions">
+            <button class="project-card-btn">Fotografie</button>
+            <button class="project-card-btn">Podklady</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2 class="sidebar-title">Reference</h2>
+    <ul class="sidebar-list">
+      <li><a href="prumyslove-stavby.html" class="active">Průmyslové stavby <span class="arrow">&#9654;</span></a></li>
+      <li><a href="#">Obchodní centra <span class="arrow">&#9654;</span></a></li>
+      <li><a href="#">Obchodní zastoupení <span class="arrow">&#9654;</span></a></li>
+      <li><a href="#">Objekty pro bydlení <span class="arrow">&#9654;</span></a></li>
+      <li><a href="#">Školská a sportovní zařízení <span class="arrow">&#9654;</span></a></li>
+      <li><a href="#">Zdravotnická zařízení <span class="arrow">&#9654;</span></a></li>
+      <li><a href="#">Energetika <span class="arrow">&#9654;</span></a></li>
+    </ul>
+  </aside>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer" id="kontakt">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <img src="logo-bile.png" alt="Niersberger" style="height: 50px; width: auto;">
+      </div>
+      <h2 class="footer-heading">Napište nám, nebo zavolejte</h2>
+      <p class="footer-sub">Rádi Vám poradíme s vašim projektem</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Jméno *</label>
+          <input type="text" placeholder="Jan">
+        </div>
+        <div class="form-group">
+          <label>Příjmení *</label>
+          <input type="text" placeholder="Novák">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Telefon *</label>
+          <input type="tel" placeholder="+420 ...">
+        </div>
+        <div class="form-group">
+          <label>E-mail *</label>
+          <input type="email" placeholder="jan@firma.cz">
+        </div>
+      </div>
+      <div class="form-group full">
+        <label>Poznámka *</label>
+        <textarea placeholder="Váš dotaz nebo poptávka..."></textarea>
+      </div>
+      <button class="form-submit">Odeslat</button>
+    </div>
+
+    <div class="footer-contact">
+      <div class="footer-contact-block">
+        <div class="contact-item">
+          <p class="contact-item-label">Telefon</p>
+          <p class="contact-item-value"><a href="tel:+420317721741">+420 317 721 741-2</a></p>
+        </div>
+        <div class="contact-item">
+          <p class="contact-item-label">Servisní hotline</p>
+          <p class="contact-item-value"><a href="tel:+420777700022">+420 777 700 022</a></p>
+        </div>
+        <div class="contact-item">
+          <p class="contact-item-label">E-mail</p>
+          <p class="contact-item-value"><a href="mailto:info@niersberger.cz">info@niersberger.cz</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 Niersberger. Všechna práva vyhrazena.</p>
+    <div class="footer-socials">
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealElements = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealElements.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
