@@ -689,11 +689,27 @@
     .navbar-links a { font-size: 11px; }
     .references { padding: 64px 24px 80px; }
     .references-grid { grid-template-columns: 1fr; gap: 24px; }
-    .footer { padding: 60px 24px 40px; }
+    .reference-card { aspect-ratio: 4/3; }
+    .footer { padding: 48px 24px; }
     .footer-inner { grid-template-columns: 1fr; gap: 48px; }
   }
 
+  @media (max-width: 768px) {
+    .hero-services {
+      flex-wrap: wrap; gap: 20px; bottom: 100px;
+    }
+    .hero-service-circle { width: 70px; height: 70px; }
+    .hero-service-circle svg { width: 28px; height: 28px; }
+    .hero-service-label { font-size: 10px; }
+    .hero-tagline { font-size: 16px; white-space: normal; padding: 0 24px; }
+    .hero-watermark img { width: 300px; }
+    .hero-socials { display: none; }
+    .scroll-arrow { display: none; }
+  }
+
   @media (max-width: 640px) {
+    .navbar { padding: 14px 20px; }
+    .navbar-logo img { height: 32px !important; }
     .navbar-links { display: none; }
   }
 </style>
