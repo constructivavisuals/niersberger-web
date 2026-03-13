@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JHP WERK 5 – Reference – Niersberger</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-primary: #00549E;
+    --blue-dark: #003a6e;
+    --blue-deep: #002347;
+    --accent-red: #E31819;
+    --white: #ffffff;
+    --gray-50: #f9fafb;
+    --gray-100: #f5f7f8;
+    --gray-200: #e8ebed;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-family: 'Montserrat', sans-serif; }
+  body { background: var(--white); color: var(--gray-800); overflow-x: hidden; }
+
+  /* ─── NAVBAR ─── */
+  .navbar {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--blue-primary);
+    box-shadow: 0 2px 24px rgba(0,0,0,0.1);
+  }
+  .navbar-logo img { height: 44px; width: auto; display: block; }
+  .navbar-right { display: flex; align-items: center; }
+  .navbar-links { display: flex; gap: 32px; list-style: none; }
+  .navbar-links a {
+    color: var(--white); text-decoration: none; font-size: 13px;
+    font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    padding-bottom: 4px; position: relative; transition: opacity 0.3s;
+  }
+  .navbar-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 2px; background: var(--white); transition: width 0.3s;
+  }
+  .navbar-links a:hover::after { width: 100%; }
+  .navbar-lang {
+    display: flex; gap: 12px; margin-left: 24px;
+    padding-left: 24px; border-left: 1px solid rgba(255,255,255,0.3);
+  }
+  .navbar-lang a {
+    color: rgba(255,255,255,0.5); text-decoration: none;
+    font-size: 13px; font-weight: 600; transition: color 0.3s;
+  }
+  .navbar-lang a.active, .navbar-lang a:hover { color: var(--white); }
+
+  /* ─── HERO FULLSCREEN ─── */
+  .project-hero {
+    position: relative; width: 100%; height: 100vh;
+    min-height: 600px; overflow: hidden;
+  }
+  .project-hero-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  }
+  .project-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,20,40,0.25) 0%, rgba(0,20,40,0.55) 70%, rgba(0,20,40,0.75) 100%);
+  }
+  .project-hero .back-link {
+    position: absolute; top: 100px; left: 60px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7);
+    text-decoration: none; transition: color 0.3s, gap 0.3s;
+  }
+  .project-hero .back-link:hover { color: #fff; gap: 12px; }
+  .project-hero-content {
+    position: absolute; bottom: 60px; left: 60px; z-index: 2; color: #fff;
+  }
+  .project-hero-date {
+    display: inline-block; background: rgba(0,84,158,0.7);
+    backdrop-filter: blur(8px); padding: 6px 18px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; color: #fff; margin-bottom: 20px;
+  }
+  .project-hero-content h1 {
+    font-size: clamp(52px, 8vw, 88px); font-weight: 900;
+    letter-spacing: -0.03em; line-height: 1.0; margin-bottom: 28px;
+    text-shadow: 0 4px 32px rgba(0,0,0,0.3);
+  }
+  .project-hero-btns { display: flex; gap: 12px; }
+  .project-hero-btn {
+    padding: 10px 26px; border-radius: 24px;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.1); backdrop-filter: blur(6px);
+    font-family: 'Montserrat', sans-serif; font-size: 13px;
+    font-weight: 600; color: #fff; cursor: pointer; transition: all 0.3s;
+  }
+  .project-hero-btn:hover {
+    background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.6);
+  }
+  .project-hero-scroll {
+    position: absolute; bottom: 28px; right: 60px; z-index: 2;
+    width: 44px; height: 44px; border: 1.5px solid rgba(255,255,255,0.35);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s; text-decoration: none;
+  }
+  .project-hero-scroll:hover {
+    border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.1);
+  }
+
+  /* ─── PROJECT INFO + GALLERY ─── */
+  .project-detail {
+    padding: 100px 48px 120px;
+    background: var(--white);
+  }
+
+  .project-detail-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  /* LEFT: Info + Metrics */
+  .project-info {
+    position: sticky;
+    top: 120px;
+  }
+
+  .project-info-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--blue-primary); margin-bottom: 12px;
+  }
+
+  .project-info h2 {
+    font-size: 36px; font-weight: 900; color: var(--gray-900);
+    letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px;
+  }
+
+  .project-info-sub {
+    font-size: 15px; color: var(--gray-400); font-weight: 400;
+    margin-bottom: 40px;
+  }
+
+  .project-metrics {
+    display: flex; flex-direction: column; gap: 0;
+  }
+
+  .metric-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .metric-item:first-child { border-top: 1px solid var(--gray-200); }
+
+  .metric-icon {
+    width: 40px; height: 40px; min-width: 40px;
+    border-radius: 10px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+
+  .metric-icon svg {
+    width: 20px; height: 20px; stroke: var(--blue-primary);
+    fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .metric-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--gray-400); margin-bottom: 4px;
+  }
+
+  .metric-value {
+    font-size: 15px; font-weight: 600; color: var(--gray-800);
+    line-height: 1.4;
+  }
+
+  /* RIGHT: Photo Gallery */
+  .project-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .project-gallery-img {
+    width: 100%;
+    border-radius: 14px;
+    object-fit: cover;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+  }
+
+  .project-gallery-img:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  }
+
+  /* Varied heights for masonry-like feel */
+  .project-gallery-img.tall { aspect-ratio: 3/4; }
+  .project-gallery-img.wide { aspect-ratio: 16/10; grid-column: span 2; }
+  .project-gallery-img.square { aspect-ratio: 1/1; }
+  .project-gallery-img.landscape { aspect-ratio: 4/3; }
+
+  /* ─── VIDEO SECTION ─── */
+  .project-video {
+    padding: 0 48px 100px;
+  }
+  .project-video-inner {
+    max-width: 1200px; margin: 0 auto;
+    border-radius: 20px; overflow: hidden;
+    aspect-ratio: 16/9; background: var(--gray-900);
+  }
+  .project-video-inner video {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  /* ─── MORE PROJECTS ─── */
+  .more-projects {
+    padding: 100px 48px;
+    background: var(--gray-50);
+  }
+  .more-projects-inner { max-width: 1200px; margin: 0 auto; }
+  .more-projects-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--blue-primary); margin-bottom: 40px;
+  }
+  .more-projects-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+  .more-project-card {
+    text-decoration: none; color: inherit; border-radius: 16px;
+    overflow: hidden; background: var(--white);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    transition: transform 0.4s, box-shadow 0.4s; display: block;
+  }
+  .more-project-card:hover {
+    transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  }
+  .more-project-card-img {
+    width: 100%; aspect-ratio: 16/10; object-fit: cover;
+    display: block; transition: transform 0.5s;
+  }
+  .more-project-card:hover .more-project-card-img { transform: scale(1.03); }
+  .more-project-card-img-wrap { overflow: hidden; }
+  .more-project-card-body {
+    padding: 20px 24px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .more-project-card-name { font-size: 16px; font-weight: 700; color: var(--gray-800); }
+  .more-project-card-date { font-size: 12px; color: var(--gray-400); margin-top: 4px; }
+  .more-project-card-btns { display: flex; gap: 8px; }
+  .more-project-card-btn {
+    padding: 6px 14px; border-radius: 16px;
+    border: 1px solid var(--gray-200); background: var(--white);
+    font-family: 'Montserrat', sans-serif; font-size: 11px;
+    font-weight: 500; color: var(--gray-600); cursor: pointer; transition: all 0.3s;
+  }
+  .more-project-card-btn:hover { border-color: var(--blue-primary); color: var(--blue-primary); }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--blue-primary); padding: 80px 48px 60px; color: var(--white);
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+  }
+  .footer-logo { margin-bottom: 32px; }
+  .footer-logo img { height: 50px; width: auto; }
+  .footer-heading { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  .footer-sub { font-size: 14px; font-weight: 300; opacity: 0.6; margin-bottom: 36px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; }
+  .form-group input, .form-group textarea {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px; padding: 14px 16px; color: var(--white);
+    font-family: 'Montserrat', sans-serif; font-size: 14px; transition: all 0.3s; outline: none;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+  .form-group input:focus, .form-group textarea:focus { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.12); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-submit {
+    margin-top: 20px; padding: 14px 40px; background: var(--white); color: var(--blue-primary);
+    font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; border: none; border-radius: 8px;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .form-submit:hover { background: var(--gray-100); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .footer-contact { padding-top: 20px; }
+  .footer-contact-block {
+    background: rgba(255,255,255,0.06); border-radius: 16px; padding: 40px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .contact-item { margin-bottom: 28px; }
+  .contact-item:last-child { margin-bottom: 0; }
+  .contact-item-label { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5; margin-bottom: 8px; }
+  .contact-item-value { font-size: 20px; font-weight: 600; }
+  .contact-item-value a { color: var(--white); text-decoration: none; transition: opacity 0.3s; }
+  .contact-item-value a:hover { opacity: 0.8; }
+  .footer-bottom {
+    max-width: 1100px; margin: 48px auto 0; padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: 12px; opacity: 0.4; }
+  .footer-socials { display: flex; gap: 16px; }
+  .footer-socials a {
+    width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center; transition: all 0.3s;
+  }
+  .footer-socials a:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+  .footer-socials a svg { width: 16px; height: 16px; fill: var(--white); }
+
+  /* ─── ANIMATIONS ─── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .project-detail-inner { grid-template-columns: 1fr; gap: 48px; }
+    .project-info { position: static; }
+    .project-gallery { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 900px) {
+    .project-hero-content { left: 32px; bottom: 40px; }
+    .project-hero .back-link { left: 32px; }
+    .project-hero-scroll { right: 32px; }
+    .more-projects-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .navbar { padding: 16px 24px; }
+    .project-detail { padding: 60px 24px 80px; }
+  }
+  @media (max-width: 640px) {
+    .navbar-links { display: none; }
+    .project-gallery { grid-template-columns: 1fr; }
+    .project-gallery-img.wide { grid-column: span 1; }
+    .project-hero { min-height: 500px; }
+    .project-hero-content h1 { font-size: 44px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav class="navbar">
+  <a href="index.html" class="navbar-logo">
+    <img src="logo-bile.png" alt="Niersberger">
+  </a>
+  <div class="navbar-right">
+    <ul class="navbar-links">
+      <li><a href="index.html#reference">Naše služby</a></li>
+      <li><a href="index.html#reference">Reference</a></li>
+      <li><a href="#">O společnosti</a></li>
+      <li><a href="#">Kariéra</a></li>
+      <li><a href="index.html#kontakt">Kontakty</a></li>
+    </ul>
+    <div class="navbar-lang">
+      <a href="#" class="active">CZ</a>
+      <a href="#">EN</a>
+      <a href="#">DE</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="project-hero">
+  <img class="project-hero-bg" src="jhp-werk-5.jpg" alt="">
+  <div class="project-hero-overlay"></div>
+
+  <a href="prumyslove-stavby.html" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Zpět na reference
+  </a>
+
+  <div class="project-hero-content">
+    <div class="project-hero-date">Datum dokončení Q2 2025</div>
+    <h1>JHP WERK 5</h1>
+    <div class="project-hero-btns">
+      <button class="project-hero-btn">Fotografie</button>
+      <button class="project-hero-btn">Podklady</button>
+    </div>
+  </div>
+
+  <a href="#detail" class="project-hero-scroll">
+    <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</section>
+
+<!-- ─── PROJECT DETAIL: Info + Gallery ─── -->
+<section class="project-detail" id="detail">
+  <div class="project-detail-inner">
+
+    <!-- LEFT: Info & Metrics -->
+    <div class="project-info reveal">
+      <p class="project-info-label">Reference</p>
+      <h2>JHP WERK 5</h2>
+      <p class="project-info-sub">Robert Bosch · Jihlava</p>
+
+      <div class="project-metrics">
+
+        <!-- Délka realizace -->
+        <div class="metric-item">
+          <div class="metric-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <p class="metric-label">Délka realizace</p>
+            <p class="metric-value">18 měsíců</p>
+          </div>
+        </div>
+
+        <!-- Místo -->
+        <div class="metric-item">
+          <div class="metric-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <p class="metric-label">Místo realizace</p>
+            <p class="metric-value">Jihlava, Česká republika</p>
+          </div>
+        </div>
+
+        <!-- Rozsah -->
+        <div class="metric-item">
+          <div class="metric-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          </div>
+          <div>
+            <p class="metric-label">Rozsah realizace</p>
+            <p class="metric-value">Kompletní TZB — VZT, klimatizace, vytápění, chlazení, MaR</p>
+          </div>
+        </div>
+
+        <!-- Plocha -->
+        <div class="metric-item">
+          <div class="metric-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z" fill="none"/><path d="M3 3l7 7M21 3l-7 7M3 21l7-7M21 21l-7-7"/></svg>
+          </div>
+          <div>
+            <p class="metric-label">Plocha objektu</p>
+            <p class="metric-value">32 000 m²</p>
+          </div>
+        </div>
+
+        <!-- Investor -->
+        <div class="metric-item">
+          <div class="metric-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <p class="metric-label">Investor</p>
+            <p class="metric-value">Robert Bosch, spol. s r.o.</p>
+          </div>
+        </div>
+
+        <!-- Generální dodavatel -->
+        <div class="metric-item">
+          <div class="metric-icon">
+            <svg viewBox="0 0 24 24"><path d="M2 20h20M5 20V8l7-5 7 5v12"/><rect x="9" y="12" width="6" height="8"/></svg>
+          </div>
+          <div>
+            <p class="metric-label">Dodavatel TZB</p>
+            <p class="metric-value">Niersberger Instalace, s.r.o.</p>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="metric-item">
+          <div class="metric-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div>
+            <p class="metric-label">Stav projektu</p>
+            <p class="metric-value">Dokončeno</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT: Photo Gallery -->
+    <div class="project-gallery reveal">
+      <!-- Nahraď src vlastními fotkami jhp01.jpg až jhp06.jpg -->
+      <img class="project-gallery-img wide" src="jhp-werk-5.jpg" alt="JHP Werk 5 – celkový pohled">
+      <img class="project-gallery-img landscape" src="jhp01.jpg" alt="JHP Werk 5 – interiér 1">
+      <img class="project-gallery-img landscape" src="jhp02.jpg" alt="JHP Werk 5 – interiér 2">
+      <img class="project-gallery-img tall" src="jhp03.jpg" alt="JHP Werk 5 – detail">
+      <img class="project-gallery-img tall" src="jhp04.jpg" alt="JHP Werk 5 – technologie">
+      <img class="project-gallery-img wide" src="jhp05.jpg" alt="JHP Werk 5 – dokončení">
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── VIDEO ─── -->
+<section class="project-video reveal">
+  <div class="project-video-inner">
+    <video autoplay muted loop playsinline>
+      <source src="hero-video.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<!-- ─── DALŠÍ PROJEKTY ─── -->
+<section class="more-projects">
+  <div class="more-projects-inner">
+    <p class="more-projects-label reveal">Další projekty</p>
+    <div class="more-projects-grid">
+      <a href="nexen-tire.html" class="more-project-card reveal">
+        <div class="more-project-card-img-wrap">
+          <img class="more-project-card-img" src="nexen01.jpg" alt="Nexen Tire">
+        </div>
+        <div class="more-project-card-body">
+          <div>
+            <p class="more-project-card-name">NEXEN TIRE</p>
+            <p class="more-project-card-date">Datum dokončení Q4 2023</p>
+          </div>
+          <div class="more-project-card-btns">
+            <button class="more-project-card-btn">Fotografie</button>
+            <button class="more-project-card-btn">Podklady</button>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="more-project-card reveal">
+        <div class="more-project-card-img-wrap">
+          <img class="more-project-card-img" src="schaffler.jpg" alt="Schaeffler Svitavy">
+        </div>
+        <div class="more-project-card-body">
+          <div>
+            <p class="more-project-card-name">SCHAEFFLER</p>
+            <p class="more-project-card-date">Datum dokončení Q3 2022</p>
+          </div>
+          <div class="more-project-card-btns">
+            <button class="more-project-card-btn">Fotografie</button>
+            <button class="more-project-card-btn">Podklady</button>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer" id="kontakt">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <img src="logo-bile.png" alt="Niersberger" style="height: 50px; width: auto;">
+      </div>
+      <h2 class="footer-heading">Napište nám, nebo zavolejte</h2>
+      <p class="footer-sub">Rádi Vám poradíme s vašim projektem</p>
+      <div class="form-row">
+        <div class="form-group"><label>Jméno *</label><input type="text" placeholder="Jan"></div>
+        <div class="form-group"><label>Příjmení *</label><input type="text" placeholder="Novák"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Telefon *</label><input type="tel" placeholder="+420 ..."></div>
+        <div class="form-group"><label>E-mail *</label><input type="email" placeholder="jan@firma.cz"></div>
+      </div>
+      <div class="form-group full"><label>Poznámka *</label><textarea placeholder="Váš dotaz nebo poptávka..."></textarea></div>
+      <button class="form-submit">Odeslat</button>
+    </div>
+    <div class="footer-contact">
+      <div class="footer-contact-block">
+        <div class="contact-item">
+          <p class="contact-item-label">Telefon</p>
+          <p class="contact-item-value"><a href="tel:+420317721741">+420 317 721 741-2</a></p>
+        </div>
+        <div class="contact-item">
+          <p class="contact-item-label">Servisní hotline</p>
+          <p class="contact-item-value"><a href="tel:+420777700022">+420 777 700 022</a></p>
+        </div>
+        <div class="contact-item">
+          <p class="contact-item-label">E-mail</p>
+          <p class="contact-item-value"><a href="mailto:info@niersberger.cz">info@niersberger.cz</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Niersberger. Všechna práva vyhrazena.</p>
+    <div class="footer-socials">
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+      <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/></svg></a>
+      <a href="#"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealElements = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealElements.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
