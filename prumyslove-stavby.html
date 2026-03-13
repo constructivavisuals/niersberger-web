@@ -48,7 +48,7 @@
   }
 
   .navbar-logo img {
-    height: 44px;
+    height: 55px;
     width: auto;
     display: block;
   }
@@ -168,7 +168,7 @@
 
   /* ─── SIDEBAR + CONTENT LAYOUT ─── */
   .page-body {
-    max-width: 1300px;
+    max-width: 1440px;
     margin: 0 auto;
     padding: 60px 48px 100px;
     display: grid;
@@ -180,13 +180,14 @@
   .projects-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
+    gap: 40px;
   }
 
   .project-card {
     background: var(--white);
     border-radius: 16px;
     overflow: hidden;
+    min-width: 420px;
     box-shadow: 0 2px 16px rgba(0,0,0,0.06);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     cursor: pointer;
@@ -230,20 +231,21 @@
   .project-card-body {
     padding: 20px 24px 24px;
     display: flex;
+    flex-wrap: nowrap;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 16px;
+    gap: 24px;
   }
 
   .project-card-dots {
     display: flex;
-    gap: 5px;
+    gap: 4px;
     margin-top: 6px;
   }
 
   .project-card-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: var(--blue-primary);
   }
@@ -257,6 +259,7 @@
   .project-card-name {
     font-size: 16px;
     font-weight: 700;
+    white-space: nowrap;
     color: var(--gray-800);
     margin-bottom: 4px;
     letter-spacing: 0.01em;
@@ -570,7 +573,7 @@
 <!-- ─── NAVBAR ─── -->
 <nav class="navbar">
   <a href="index.html" class="navbar-logo">
-    <img src="logo-bile.png" alt="Niersberger" style="height: 44px; width: auto;">
+    <img src="logo-bile.png" alt="Niersberger" style="height: 55px; width: auto;">
   </a>
   <div class="navbar-right">
     <ul class="navbar-links">
